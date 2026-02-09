@@ -13,20 +13,34 @@ p{font-size:14px;line-height:1.6;margin:12px 0;}
 .status{display:none;margin-top:22px;font-size:14px;color:#111;}
 .en{margin-top:22px;font-size:13px;color:#444;}
 </style>
+
 <script>
+function getPayUrl(){
+  const params = new URLSearchParams(window.location.search);
+  return params.get("pay");
+}
+
 function goPay(){
+  const payUrl = getPayUrl();
+  if(!payUrl){
+    alert("Payment link not found");
+    return;
+  }
   document.getElementById("btn").style.display="none";
   document.getElementById("status").style.display="block";
   setTimeout(function(){
-    window.location.href="https://checkout.paydo.com/en-GB/payment/75906c95-5188-4841-aacd-69a82773f8ff";
+    window.location.href = payUrl;
   },600);
 }
 </script>
 </head>
+
 <body>
 <div class="wrap">
   <h1>支付确认</h1>
+
   <p>请确认支付信息后完成付款。</p>
+
   <p><strong>支付完成后，您可直接关闭本窗口。</strong></p>
 
   <div class="en">
@@ -34,8 +48,14 @@ function goPay(){
     <p><strong>After payment, you may close this window.</strong></p>
   </div>
 
-  <a id="btn" class="btn" href="javascript:void(0)" onclick="goPay()">前往支付 / Proceed to Payment</a>
-  <div id="status" class="status">正在打开支付页面…<br>Opening payment page…</div>
+  <a id="btn" class="btn" href="javascript:void(0)" onclick="goPay()">
+    前往支付 / Proceed to Payment
+  </a>
+
+  <div id="status" class="status">
+    正在打开支付页面…<br>
+    Opening payment page…
+  </div>
 </div>
 </body>
 </html>
